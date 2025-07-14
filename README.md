@@ -1,12 +1,62 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Hotel Booking App
 
-Currently, two official plugins are available:
+This is a full-stack hotel booking application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Tech Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** React (Vite)
+- **Backend:** Django (REST API)
+- **Containerization:** Docker (optional)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- Search for hotels by location, date, rooms, and guests
+- Responsive and modern UI
+- RESTful API for hotel data
+
+## Getting Started
+
+### Backend (Django)
+
+1. Navigate to the backend directory:
+   ```sh
+   cd backend
+   ```
+2. Install dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
+3. Run migrations:
+   ```sh
+   python manage.py migrate
+   ```
+4. Start the backend server:
+   ```sh
+   python manage.py runserver
+   ```
+
+### Frontend (React)
+
+1. Go to the project root:
+   ```sh
+   cd ..
+   ```
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
+3. Start the frontend server:
+   ```sh
+   npm run dev
+   ```
+
+The React app will be available at `http://localhost:5173` and the Django API at `http://localhost:8000`.
+
+### Docker (Optional)
+
+You can use Docker and docker-compose for containerized development. See `docker-compose.yml` for details.
+
+## License
+
+This project is licensed under the MIT License.
