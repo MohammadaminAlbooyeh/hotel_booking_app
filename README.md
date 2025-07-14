@@ -59,4 +59,4 @@ You can use Docker and docker-compose for containerized development. See `docker
 
 ## License
 
-This project is licensed under the MIT License.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
