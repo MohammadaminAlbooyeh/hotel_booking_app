@@ -1,4 +1,5 @@
 
+
 import { useEffect, useState } from 'react';
 import './App.css';
 
@@ -6,8 +7,7 @@ function App() {
   const [hotels, setHotels] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [form, setForm] = useState({ name: '', city: '', address: '', description: '' });
-  const [submitting, setSubmitting] = useState(false);
+  const [search, setSearch] = useState('');
 
   const fetchHotels = () => {
     setLoading(true);
@@ -30,52 +30,69 @@ function App() {
     fetchHotels();
   }, []);
 
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitting(true);
-    setError(null);
-    fetch('http://localhost:8000/api/hotels/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(form),
-    })
-      .then((res) => {
-        if (!res.ok) throw new Error('ثبت هتل موفق نبود');
-        return res.json();
-      })
-      .then(() => {
-        setForm({ name: '', city: '', address: '', description: '' });
-        fetchHotels();
-      })
-      .catch((err) => setError(err.message))
-      .finally(() => setSubmitting(false));
+  const handleSearch = (e) => {
+    setSearch(e.target.value);
   };
 
   return (
     <div className="container">
-      <h1>Hotel List</h1>
-      <form onSubmit={handleSubmit} style={{ marginBottom: 24 }}>
-        <input name="name" value={form.name} onChange={handleChange} placeholder="Hotel Name" required />{' '}
-        <input name="city" value={form.city} onChange={handleChange} placeholder="City" required />{' '}
-        <input name="address" value={form.address} onChange={handleChange} placeholder="Address" required />{' '}
-        <input name="description" value={form.description} onChange={handleChange} placeholder="Description" />{' '}
-        <button type="submit" disabled={submitting}>Add Hotel</button>
+      <h1 style={{ fontSize: '3rem', fontWeight: 'bold', margin: '2rem 0 1rem', color: '#fff', textShadow: '0 2px 8px rgba(0,0,0,0.25)' }}>
+        Find the Best Hotel
+      </h1>
+      <form
+        style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: 12,
+          background: '#fff',
+          borderRadius: 12,
+          boxShadow: '0 2px 16px rgba(0,0,0,0.08)',
+          padding: 20,
+          margin: '0 auto 32px',
+          maxWidth: 900,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        onSubmit={e => e.preventDefault()}
+      >
+        <input type="text" placeholder="Location" style={{ flex: 2, minWidth: 120, padding: 10, borderRadius: 6, border: '1px solid #ccc' }} />
+        <input type="date" placeholder="Check In" style={{ flex: 1, minWidth: 120, padding: 10, borderRadius: 6, border: '1px solid #ccc' }} />
+        <input type="date" placeholder="Check Out" style={{ flex: 1, minWidth: 120, padding: 10, borderRadius: 6, border: '1px solid #ccc' }} />
+        <select style={{ flex: 1, minWidth: 100, padding: 10, borderRadius: 6, border: '1px solid #ccc' }}>
+          <option>Rooms</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+        <select style={{ flex: 1, minWidth: 100, padding: 10, borderRadius: 6, border: '1px solid #ccc' }}>
+          <option>Adults</option>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+        </select>
+        <button type="submit" style={{ flex: 1, minWidth: 120, padding: 12, borderRadius: 6, background: '#43b649', color: '#fff', fontWeight: 'bold', border: 'none', fontSize: 16, cursor: 'pointer' }}>
+          Search
+        </button>
       </form>
       {loading && <p>Loading...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <ul>
-        {hotels.map((hotel) => (
-          <li key={hotel.id}>
-            <strong>{hotel.name}</strong> - {hotel.city}
-            <br />
-            <small>{hotel.address}</small>
-            <p>{hotel.description}</p>
-          </li>
-        ))}
+        {hotels
+          .filter((hotel) =>
+            hotel.name.toLowerCase().includes(search.toLowerCase()) ||
+            hotel.city.toLowerCase().includes(search.toLowerCase())
+          )
+          .map((hotel) => (
+            <li key={hotel.id}>
+              <strong>{hotel.name}</strong> - {hotel.city}
+              <br />
+              <small>{hotel.address}</small>
+              <p>{hotel.description}</p>
+            </li>
+          ))}
       </ul>
     </div>
   );
