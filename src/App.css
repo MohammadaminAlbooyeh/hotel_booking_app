@@ -13,6 +13,11 @@ form select {
 form input[type="text"]::placeholder {
   color: #888;
 }
+body {
+  background: url('/src/assets/beach.png') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+}
 li {
   background: #fff;
   color: #213547;
